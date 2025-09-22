@@ -32,12 +32,18 @@ const translationPrompt = ai.definePrompt({
   input: { schema: TranslateInputSchema },
   output: { schema: TranslateOutputSchema },
   prompt: `
-    You are a translation expert. Translate the following English texts into {{targetLanguage}}.
-    Return the translations as a JSON object where the keys are the original English strings and the values are the translated strings.
+    You are a professional translator specializing in localizing software for agricultural communities in India.
+    Your task is to translate English UI text into {{targetLanguage}}.
+
+    The application is for farmers who grow and harvest medicinal plants. The tone should be encouraging, clear, and respectful.
     
-    Ensure the JSON is well-formed. Do not translate placeholders like '{{...}}'.
+    - Translate the meaning and intent, not just the literal words.
+    - Keep translations concise and suitable for a mobile UI.
+    - IMPORTANT: Do not translate placeholders like '{{placeholder}}'. Return them as they are.
+
+    Return the translations as a well-formed JSON object where the keys are the original English strings and the values are the translated strings.
     
-    Texts to translate:
+    Texts to translate into {{targetLanguage}}:
     {{#each texts}}
     - "{{this}}"
     {{/each}}
