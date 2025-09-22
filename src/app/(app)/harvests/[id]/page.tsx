@@ -23,12 +23,18 @@ export default function HarvestDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // This effect runs only on the client, ensuring localStorage is available.
     if (id) {
       const storedHarvests = JSON.parse(localStorage.getItem('harvests') || '[]');
       const allHarvests = [...storedHarvests, ...mockHarvests];
-      // Deduplicate harvests based on id, giving priority to stored (newer) ones.
-      const uniqueHarvests = Array.from(new Map(allHarvests.map(h => [h.id, h])).values());
-      const foundHarvest = uniqueHarvests.find((h: Harvest) => h.id === id) || null;
+
+      // Create a Map to ensure harvests are unique by ID.
+      // The map constructor will automatically handle deduplication, keeping the first
+      // entry it sees for a given key. Since storedHarvests comes first, it takes precedence.
+      const uniqueHarvestsMap = new Map(allHarvests.map(h => [h.id, h]));
+      
+      const foundHarvest = uniqueHarvestsMap.get(id) || null;
+      
       setHarvest(foundHarvest);
       setIsLoading(false);
     }

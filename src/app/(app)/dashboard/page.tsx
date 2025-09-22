@@ -23,12 +23,15 @@ export default function DashboardPage() {
   const [recentHarvests, setRecentHarvests] = useState<Harvest[]>([]);
 
   useEffect(() => {
-    // Combine mock data with data from local storage on the client side
+    // This effect runs only on the client, ensuring localStorage is available.
     const storedHarvests = JSON.parse(localStorage.getItem('harvests') || '[]');
     const combinedHarvests = [...storedHarvests, ...initialHarvests];
     
-    // Deduplicate harvests based on id, giving priority to stored (newer) ones.
-    const uniqueHarvests = Array.from(new Map(combinedHarvests.map(h => [h.id, h])).values());
+    // Create a Map to ensure harvests are unique by ID.
+    // The map constructor will automatically handle deduplication, keeping the first
+    // entry it sees for a given key. Since storedHarvests comes first, it takes precedence.
+    const uniqueHarvestsMap = new Map(combinedHarvests.map(h => [h.id, h]));
+    const uniqueHarvests = Array.from(uniqueHarvestsMap.values());
 
     // Sort by date, most recent first, and take the top 2
     uniqueHarvests.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
