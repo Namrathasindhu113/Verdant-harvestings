@@ -19,7 +19,7 @@ const TranslateInputSchema = z.object({
 export type TranslateInput = z.infer<typeof TranslateInputSchema>;
 
 const TranslateOutputSchema = z.object({
-  translations: z.record(z.string(), z.string()).describe('A key-value map where keys are the original English strings and values are the translated strings.'),
+  translations: z.any().describe('A key-value map where keys are the original English strings and values are the translated strings.'),
 });
 export type TranslateOutput = z.infer<typeof TranslateOutputSchema>;
 
