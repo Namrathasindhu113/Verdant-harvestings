@@ -26,7 +26,8 @@ export default function HarvestDetailPage() {
     // This effect runs only on the client, ensuring localStorage is available.
     if (id) {
       const storedHarvests = JSON.parse(localStorage.getItem('harvests') || '[]');
-      const allHarvests = [...storedHarvests, ...mockHarvests];
+      const allHarvests = [...mockHarvests, ...storedHarvests];
+      // By placing storedHarvests last, any user-saved harvest will overwrite the initial mock harvest.
       const uniqueHarvestsMap = new Map(allHarvests.map(h => [h.id, h]));
       const foundHarvest = uniqueHarvestsMap.get(id) || null;
       setHarvest(foundHarvest);

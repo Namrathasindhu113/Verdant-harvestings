@@ -61,7 +61,7 @@ export function EditHarvestForm() {
   useEffect(() => {
     if (id) {
       const storedHarvests = JSON.parse(localStorage.getItem('harvests') || '[]');
-      const allHarvests = [...storedHarvests, ...mockHarvests];
+      const allHarvests = [...mockHarvests, ...storedHarvests];
       const uniqueHarvestsMap = new Map(allHarvests.map(h => [h.id, h]));
       const foundHarvest = uniqueHarvestsMap.get(id) || null;
       
@@ -128,17 +128,14 @@ export function EditHarvestForm() {
         },
       };
 
-      // Get all harvests from local storage
       const storedHarvests: Harvest[] = JSON.parse(localStorage.getItem('harvests') || '[]');
-      
-      // Check if the harvest to be updated is already in local storage.
-      const harvestInLocalStorage = storedHarvests.find(h => h.id === id);
+      const harvestIndex = storedHarvests.findIndex(h => h.id === id);
 
       let finalHarvests: Harvest[];
-
-      if (harvestInLocalStorage) {
-        // If it's in local storage, just update it.
-        finalHarvests = storedHarvests.map(h => h.id === id ? updatedHarvest : h);
+      if (harvestIndex > -1) {
+        // If it's in local storage, update it in place.
+        finalHarvests = [...storedHarvests];
+        finalHarvests[harvestIndex] = updatedHarvest;
       } else {
         // If it's a mock harvest not yet in storage, add the updated version.
         finalHarvests = [...storedHarvests, updatedHarvest];

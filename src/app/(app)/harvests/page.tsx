@@ -18,11 +18,10 @@ export default function HarvestsPage() {
   useEffect(() => {
     // This effect runs only on the client, ensuring localStorage is available.
     const storedHarvests = JSON.parse(localStorage.getItem('harvests') || '[]');
-    const combinedHarvests = [...storedHarvests, ...initialHarvests];
+    const combinedHarvests = [...initialHarvests, ...storedHarvests];
 
     // Create a Map to ensure harvests are unique by ID.
-    // The map constructor will automatically handle deduplication, keeping the first
-    // entry it sees for a given key. Since storedHarvests comes first, it takes precedence.
+    // By placing storedHarvests last, any user-saved harvest will overwrite the initial mock harvest.
     const uniqueHarvestsMap = new Map(combinedHarvests.map(h => [h.id, h]));
     const uniqueHarvests = Array.from(uniqueHarvestsMap.values());
 
