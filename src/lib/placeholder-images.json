@@ -1,33 +1,33 @@
 {
   "placeholderImages": [
     {
-      "id": "medicinal1",
-      "description": "An Ashwagandha plant with green leaves and red berries.",
-      "imageUrl": "https://picsum.photos/seed/medicinal1/400/300",
-      "imageHint": "ashwagandha plant"
+      "id": "ashwagandha",
+      "description": "A young Ashwagandha sapling with green leaves.",
+      "imageUrl": "https://picsum.photos/seed/ashwagandha/400/300",
+      "imageHint": "ashwagandha sapling"
     },
     {
-      "id": "medicinal2",
-      "description": "A lush Tulsi (Holy Basil) plant.",
-      "imageUrl": "https://picsum.photos/seed/medicinal2/400/300",
-      "imageHint": "tulsi plant"
+      "id": "tulsi",
+      "description": "A small Tulsi (Holy Basil) sapling in a pot.",
+      "imageUrl": "https://picsum.photos/seed/tulsi/400/300",
+      "imageHint": "tulsi sapling"
     },
     {
-      "id": "medicinal3",
-      "description": "A branch of a Neem tree with its distinctive leaves.",
-      "imageUrl": "https://picsum.photos/seed/medicinal3/400/300",
-      "imageHint": "neem leaves"
+      "id": "neem",
+      "description": "A young Neem sapling with bright green leaves.",
+      "imageUrl": "https://picsum.photos/seed/neem/400/300",
+      "imageHint": "neem sapling"
     },
     {
-      "id": "medicinal4",
-      "description": "An Aloe Vera plant with its thick, spiky leaves.",
-      "imageUrl": "https://picsum.photos/seed/medicinal4/400/300",
+      "id": "aloe",
+      "description": "A small Aloe Vera plant.",
+      "imageUrl": "https://picsum.photos/seed/aloe/400/300",
       "imageHint": "aloe vera"
     },
     {
-      "id": "medicinal5",
-      "description": "A turmeric plant with its large leaves and a view of the root.",
-      "imageUrl": "https://picsum.photos/seed/medicinal5/400/300",
+      "id": "turmeric",
+      "description": "A turmeric plant with large leaves.",
+      "imageUrl": "https://picsum.photos/seed/turmeric/400/300",
       "imageHint": "turmeric plant"
     },
     {
