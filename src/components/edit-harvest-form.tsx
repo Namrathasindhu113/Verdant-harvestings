@@ -73,7 +73,7 @@ export function EditHarvestForm() {
           herbName: foundHarvest.herbName,
           quantity: foundHarvest.quantity,
           unit: foundHarvest.unit,
-          location: `${foundHarvest.gps.lat}, ${foundHarvest.gps.lon}`,
+          location: `${foundHarvest.gps.lat.toFixed(4)}, ${foundHarvest.gps.lon.toFixed(4)}`,
         });
       }
     }
@@ -128,9 +128,23 @@ export function EditHarvestForm() {
         },
       };
 
+      // Get all harvests from local storage
       const storedHarvests: Harvest[] = JSON.parse(localStorage.getItem('harvests') || '[]');
-      const updatedHarvests = storedHarvests.map(h => h.id === id ? updatedHarvest : h);
-      localStorage.setItem('harvests', JSON.stringify(updatedHarvests));
+      
+      // Check if the harvest to be updated is already in local storage.
+      const harvestInLocalStorage = storedHarvests.find(h => h.id === id);
+
+      let finalHarvests: Harvest[];
+
+      if (harvestInLocalStorage) {
+        // If it's in local storage, just update it.
+        finalHarvests = storedHarvests.map(h => h.id === id ? updatedHarvest : h);
+      } else {
+        // If it's a mock harvest not yet in storage, add the updated version.
+        finalHarvests = [...storedHarvests, updatedHarvest];
+      }
+
+      localStorage.setItem('harvests', JSON.stringify(finalHarvests));
 
       toast({
         title: t('Harvest Updated!'),
