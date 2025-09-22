@@ -14,8 +14,8 @@ export const mockHarvests: Harvest[] = [
     quantity: 1.5,
     unit: 'kg',
     date: new Date('2024-07-20T10:00:00Z'),
-    photoUrl: 'https://picsum.photos/seed/ashwagandha-plant/400/300',
-    photoHint: 'ashwagandha plant',
+    photoUrl: 'https://picsum.photos/seed/ashwagandha-plant-berries/400/300',
+    photoHint: 'ashwagandha plant berries',
     gps: { lat: 34.0522, lon: -118.2437 },
   },
   {
