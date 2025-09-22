@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "ashwagandha",
-      "description": "A young Ashwagandha sapling with green leaves.",
-      "imageUrl": "https://picsum.photos/seed/ashwagandha/400/300",
-      "imageHint": "ashwagandha sapling"
+      "description": "An Ashwagandha plant with red berries.",
+      "imageUrl": "https://picsum.photos/seed/ashwagandha-plant/400/300",
+      "imageHint": "ashwagandha plant"
     },
     {
       "id": "tulsi",
