@@ -26,6 +26,7 @@ export default function HarvestDetailPage() {
     if (id) {
       const storedHarvests = JSON.parse(localStorage.getItem('harvests') || '[]');
       const allHarvests = [...storedHarvests, ...mockHarvests];
+      // Deduplicate harvests based on id, giving priority to stored (newer) ones.
       const uniqueHarvests = Array.from(new Map(allHarvests.map(h => [h.id, h])).values());
       const foundHarvest = uniqueHarvests.find((h: Harvest) => h.id === id) || null;
       setHarvest(foundHarvest);

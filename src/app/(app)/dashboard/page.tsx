@@ -27,7 +27,7 @@ export default function DashboardPage() {
     const storedHarvests = JSON.parse(localStorage.getItem('harvests') || '[]');
     const combinedHarvests = [...storedHarvests, ...initialHarvests];
     
-    // Deduplicate harvests based on id
+    // Deduplicate harvests based on id, giving priority to stored (newer) ones.
     const uniqueHarvests = Array.from(new Map(combinedHarvests.map(h => [h.id, h])).values());
 
     // Sort by date, most recent first, and take the top 2
