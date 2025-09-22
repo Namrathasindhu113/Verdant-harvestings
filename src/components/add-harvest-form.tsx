@@ -16,25 +16,35 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { MapPin, Upload } from 'lucide-react';
+import { MapPin, Upload, Loader2, ShieldCheck, ShieldAlert } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { verifyHarvestPhoto } from '@/ai/flows/verify-harvest-photo-flow';
 
 const harvestFormSchema = z.object({
   herbName: z.string().min(2, { message: 'Herb name must be at least 2 characters.' }),
   quantity: z.coerce.number().positive({ message: 'Quantity must be a positive number.' }),
   unit: z.string().default('kg'),
-  photo: z.any().refine(files => files?.length > 0, 'A photo is required.'),
+  photo: z.custom<FileList>().refine(files => files?.length > 0, 'A photo is required.'),
   location: z.string().optional(),
 });
 
 type HarvestFormValues = z.infer<typeof harvestFormSchema>;
+
+const fileToDataUri = (file: File) => new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+});
+
 
 export function AddHarvestForm() {
   const router = useRouter();
   const { toast } = useToast();
   const [location, setLocation] = useState<string>('');
   const [isLocating, setIsLocating] = useState<boolean>(false);
+  const [isVerifying, setIsVerifying] = useState<boolean>(false);
 
   const form = useForm<HarvestFormValues>({
     resolver: zodResolver(harvestFormSchema),
@@ -45,13 +55,50 @@ export function AddHarvestForm() {
     },
   });
 
-  function onSubmit(data: HarvestFormValues) {
-    console.log(data);
-    toast({
-      title: 'Harvest Recorded!',
-      description: `${data.quantity} ${data.unit} of ${data.herbName} has been saved.`,
-    });
-    router.push('/dashboard');
+  async function onSubmit(data: HarvestFormValues) {
+    setIsVerifying(true);
+    try {
+        const photoFile = data.photo[0];
+        const photoDataUri = await fileToDataUri(photoFile);
+
+        const verificationResult = await verifyHarvestPhoto({
+            photoDataUri,
+            herbName: data.herbName,
+        });
+
+        if (verificationResult.isPhotoGenuine) {
+            toast({
+                title: 'Photo Verified!',
+                description: verificationResult.reason,
+                className: 'bg-green-100 dark:bg-green-900 border-green-300 dark:border-green-700'
+            });
+
+            // Proceed with saving
+            console.log(data);
+            toast({
+              title: 'Harvest Recorded!',
+              description: `${data.quantity} ${data.unit} of ${data.herbName} has been saved.`,
+            });
+            router.push('/dashboard');
+
+        } else {
+            toast({
+                variant: 'destructive',
+                title: 'Photo Verification Failed',
+                description: verificationResult.reason,
+            });
+        }
+
+    } catch (error) {
+        console.error('Verification failed', error);
+        toast({
+            variant: 'destructive',
+            title: 'An error occurred',
+            description: 'Could not verify the photo at this time.',
+        })
+    } finally {
+        setIsVerifying(false);
+    }
   }
 
   function handleGetLocation() {
@@ -75,7 +122,7 @@ export function AddHarvestForm() {
     <Card className="shadow-lg">
         <CardHeader>
             <CardTitle>Add New Harvest</CardTitle>
-            <CardDescription>Fill in the details of your recent harvest.</CardDescription>
+            <CardDescription>Fill in the details of your recent harvest. The photo will be verified by AI.</CardDescription>
         </CardHeader>
         <CardContent>
             <Form {...form}>
@@ -165,7 +212,16 @@ export function AddHarvestForm() {
                 </FormItem>
 
 
-                <Button type="submit" className="w-full">Save Harvest</Button>
+                <Button type="submit" className="w-full" disabled={isVerifying}>
+                    {isVerifying ? (
+                        <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Verifying Photo...
+                        </>
+                    ) : (
+                        'Save Harvest'
+                    )}
+                </Button>
             </form>
             </Form>
         </CardContent>
