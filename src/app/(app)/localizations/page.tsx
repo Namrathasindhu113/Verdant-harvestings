@@ -21,6 +21,7 @@ export default function LocalizationsPage() {
   const getMissingKeys = (langCode: string) => {
     const englishKeys = Object.keys(translations.en);
     const langKeys = translations[langCode] ? Object.keys(translations[langCode]) : [];
+    // Ensure the value isn't the same as the key, which indicates it's a fallback.
     return englishKeys.filter(key => !langKeys.includes(key) || translations[langCode][key] === key);
   };
   
@@ -32,8 +33,8 @@ export default function LocalizationsPage() {
       const keysToTranslate = getMissingKeys(selectedLanguage);
       if (keysToTranslate.length === 0) {
         toast({
-            title: 'No new translations needed',
-            description: `All text for ${language.name} is up to date.`
+            title: t('No new translations needed'),
+            description: t('All text for {{languageName}} is up to date.', { languageName: language.name })
         });
         return;
       }
@@ -45,15 +46,15 @@ export default function LocalizationsPage() {
         });
         addTranslations(selectedLanguage, result.translations);
         toast({
-            title: 'Translations Updated!',
-            description: `${keysToTranslate.length} new translations for ${language.name} have been added.`
+            title: t('Translations Updated!'),
+            description: t('{{count}} new translations for {{languageName}} have been added.', { count: keysToTranslate.length, languageName: language.name })
         });
       } catch (error) {
         console.error("Translation failed", error);
         toast({
             variant: 'destructive',
-            title: 'Translation Failed',
-            description: 'Could not fetch translations from AI.'
+            title: t('Translation Failed'),
+            description: t('Could not fetch translations from AI.')
         });
       }
     });
@@ -68,17 +69,16 @@ export default function LocalizationsPage() {
       <div className="p-4 sm:p-6 max-w-4xl mx-auto space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Generate Translations</CardTitle>
+            <CardTitle>{t('Generate Translations')}</CardTitle>
             <CardDescription>
-              Use AI to generate translations for different languages in the app.
-              Select a language and click "Translate" to fill in missing text.
+              {t('Use AI to generate translations for different languages in the app. Select a language and click "Translate" to fill in missing text.')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center space-x-4">
                 <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
                 <SelectTrigger className="w-[280px]">
-                    <SelectValue placeholder="Select a language" />
+                    <SelectValue placeholder={t('Select a language')} />
                 </SelectTrigger>
                 <SelectContent>
                     {indianLanguages.filter(l => l.code !== 'en').map(lang => (
@@ -88,12 +88,12 @@ export default function LocalizationsPage() {
                 </Select>
                 <Button onClick={handleTranslate} disabled={isPending}>
                     {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                    Translate with AI
+                    {t('Translate with AI')}
                 </Button>
             </div>
             
             <div className='space-y-2'>
-                <h3 className="text-lg font-semibold">Missing Translations for {languageName}</h3>
+                <h3 className="text-lg font-semibold">{t('Missing Translations for {{languageName}}', { languageName })}</h3>
                 {missingKeys.length > 0 ? (
                     <Textarea 
                         readOnly
@@ -103,7 +103,7 @@ export default function LocalizationsPage() {
                     />
                 ): (
                     <p className="text-sm text-muted-foreground p-4 text-center bg-muted rounded-md">
-                        All translations for {languageName} are complete!
+                        {t('All translations for {{languageName}} are complete!', { languageName })}
                     </p>
                 )}
             </div>

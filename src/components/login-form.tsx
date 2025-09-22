@@ -12,8 +12,6 @@ export function LoginForm() {
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // In a real app, you'd handle authentication here.
-    // For this demo, we'll just navigate to the dashboard.
     router.push('/dashboard');
   };
 

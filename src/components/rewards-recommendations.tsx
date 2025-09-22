@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { useState, useTransition } from 'react';
 import { Lightbulb, Loader2, Sparkles } from 'lucide-react';
+import { useLocalization } from '@/context/localization-context';
 
 type Props = {
   recentHarvestsCount: number;
@@ -20,6 +21,7 @@ export function RewardsRecommendations({
   const [isPending, startTransition] = useTransition();
   const [recommendations, setRecommendations] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useLocalization();
 
   const handleGetRecommendations = () => {
     startTransition(async () => {
@@ -34,7 +36,7 @@ export function RewardsRecommendations({
         setRecommendations(result.recommendedActions);
       } catch (e) {
         console.error(e);
-        setError('Could not get recommendations at this time.');
+        setError(t('Could not get recommendations at this time.'));
       }
     });
   };
@@ -44,19 +46,19 @@ export function RewardsRecommendations({
       <CardHeader>
         <CardTitle className="flex items-center gap-2 font-headline">
           <Sparkles className="text-accent" />
-          Boost Your Points
+          {t('Boost Your Points')}
         </CardTitle>
         <CardDescription>
-          Get AI-powered tips on how to earn more rewards.
+          {t('Get AI-powered tips on how to earn more rewards.')}
         </CardDescription>
       </CardHeader>
       <CardContent>
         {recommendations.length === 0 && !isPending ? (
           <div className="flex flex-col items-center justify-center text-center space-y-4 p-4">
-             <p className="text-sm text-muted-foreground">Click the button to get personalized recommendations.</p>
+             <p className="text-sm text-muted-foreground">{t('Click the button to get personalized recommendations.')}</p>
              <Button onClick={handleGetRecommendations} disabled={isPending}>
                 <Sparkles className="mr-2 h-4 w-4" />
-              Get Recommendations
+              {t('Get Recommendations')}
             </Button>
           </div>
         ) : isPending ? (
@@ -76,7 +78,7 @@ export function RewardsRecommendations({
                 ))}
                 </ul>
                 <Button variant="link" onClick={handleGetRecommendations} disabled={isPending} className="text-accent p-0 h-auto">
-                    Get new recommendations
+                    {t('Get new recommendations')}
                 </Button>
             </div>
         )}

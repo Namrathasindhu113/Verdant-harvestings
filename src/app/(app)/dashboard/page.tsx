@@ -11,8 +11,10 @@ import {Button} from '@/components/ui/button';
 import {ArrowUpRight, PlusCircle, Gift} from 'lucide-react';
 import {HarvestCard} from '@/components/harvest-card';
 import {AppHeader} from '@/components/app-header';
+import { useLocalization } from '@/context/localization-context';
 
 export default function DashboardPage() {
+  const { t } = useLocalization();
   const recentHarvests = mockHarvests.slice(0, 2);
   return (
     <>
@@ -21,35 +23,35 @@ export default function DashboardPage() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Welcome Back!</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('Welcome Back!')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold font-headline">{mockUser.name}</div>
               <p className="text-xs text-muted-foreground">
-                Ready to log a new harvest?
+                {t('Ready to log a new harvest?')}
               </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Reward Points</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('Reward Points')}</CardTitle>
               <Gift className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold font-headline text-accent">{mockUser.rewards.toLocaleString()}</div>
               <p className="text-xs text-muted-foreground">
-                +20.1% from last month
+                {t('+20.1% from last month')}
               </p>
             </CardContent>
           </Card>
            <Card className="lg:col-span-1 bg-primary text-primary-foreground">
             <CardHeader>
-                <CardTitle>Log a New Harvest</CardTitle>
-                <CardDescription className="text-primary-foreground/80">Keep your records up to date and earn points.</CardDescription>
+                <CardTitle>{t('Log a New Harvest')}</CardTitle>
+                <CardDescription className="text-primary-foreground/80">{t('Keep your records up to date and earn points.')}</CardDescription>
             </CardHeader>
             <CardContent>
                 <Button asChild variant="secondary" className="w-full">
-                    <Link href="/harvests/add"><PlusCircle className="mr-2 h-4 w-4" /> Add Harvest</Link>
+                    <Link href="/harvests/add"><PlusCircle className="mr-2 h-4 w-4" /> {t('Add Harvest')}</Link>
                 </Button>
             </CardContent>
            </Card>
@@ -57,10 +59,10 @@ export default function DashboardPage() {
         
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold font-headline">Recent Harvests</h2>
+            <h2 className="text-2xl font-bold font-headline">{t('Recent Harvests')}</h2>
             <Button asChild variant="link" className="text-accent hover:text-accent/80">
               <Link href="/harvests">
-                View All <ArrowUpRight className="h-4 w-4 ml-1" />
+                {t('View All')} <ArrowUpRight className="h-4 w-4 ml-1" />
               </Link>
             </Button>
           </div>
@@ -70,7 +72,7 @@ export default function DashboardPage() {
               <HarvestCard key={harvest.id} harvest={harvest} />
             ))
             ) : (
-              <p className="text-muted-foreground">No recent harvests found.</p>
+              <p className="text-muted-foreground">{t('No recent harvests found.')}</p>
             )}
           </div>
         </div>

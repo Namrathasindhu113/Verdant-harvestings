@@ -13,7 +13,7 @@ type Translations = {
 interface LocalizationContextType {
   language: string;
   setLanguage: (language: string) => void;
-  t: (key: string) => string;
+  t: (key: string, substitutions?: Record<string, string | number>) => string;
   translations: Translations;
   addTranslations: (lang: string, newTranslations: { [key: string]: string }) => void;
 }
@@ -24,15 +24,22 @@ export const LocalizationProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguage] = useState('en');
   const [translations, setTranslations] = useState<Translations>(initialTranslations);
 
-  const t = useCallback((key: string) => {
-    return translations[language]?.[key] || key;
+  const t = useCallback((key: string, substitutions: Record<string, string | number> = {}) => {
+    let translation = translations[language]?.[key] || translations['en']?.[key] || key;
+    
+    // Simple substitution
+    Object.entries(substitutions).forEach(([subKey, subValue]) => {
+        translation = translation.replace(`{{${subKey}}}`, String(subValue));
+    });
+
+    return translation;
   }, [language, translations]);
 
   const addTranslations = (lang: string, newTranslations: { [key: string]: string }) => {
     setTranslations(prev => ({
       ...prev,
       [lang]: {
-        ...prev[lang],
+        ...(prev[lang] || {}),
         ...newTranslations,
       }
     }));

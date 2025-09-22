@@ -3,8 +3,10 @@ import { RewardsRecommendations } from '@/components/rewards-recommendations';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { mockUser, mockHarvests } from '@/lib/data';
 import { Gift } from 'lucide-react';
+import { useLocalization } from '@/context/localization-context';
 
 export default function RewardsPage() {
+    const { t } = useLocalization();
     const recentHarvestsCount = mockHarvests.length;
     const totalQuantity = mockHarvests.reduce((sum, h) => sum + h.quantity, 0);
     const averageQuantityPerHarvest = recentHarvestsCount > 0 ? totalQuantity / recentHarvestsCount : 0;
@@ -20,9 +22,9 @@ export default function RewardsPage() {
                 </div>
             </CardHeader>
             <CardContent className="space-y-2">
-                <p className="text-sm font-medium text-muted-foreground">Your Rewards Balance</p>
+                <p className="text-sm font-medium text-muted-foreground">{t('Your Rewards Balance')}</p>
                 <h2 className="text-5xl font-bold font-headline text-accent">{mockUser.rewards.toLocaleString()} PTS</h2>
-                <p className="text-muted-foreground pt-2">Keep up the great work!</p>
+                <p className="text-muted-foreground pt-2">{t('Keep up the great work!')}</p>
             </CardContent>
         </Card>
         

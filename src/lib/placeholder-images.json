@@ -3,32 +3,32 @@
     {
       "id": "ashwagandha",
       "description": "An Ashwagandha plant with red berries.",
-      "imageUrl": "https://picsum.photos/seed/ashwagandha-plant-berries/400/300",
+      "imageUrl": "https://picsum.photos/seed/ashwagandha-berries/400/300",
       "imageHint": "ashwagandha plant berries"
     },
     {
       "id": "tulsi",
-      "description": "A small Tulsi (Holy Basil) sapling in a pot.",
-      "imageUrl": "https://picsum.photos/seed/tulsi/400/300",
-      "imageHint": "tulsi sapling"
+      "description": "A lush Tulsi (Holy Basil) plant.",
+      "imageUrl": "https://picsum.photos/seed/holy-basil/400/300",
+      "imageHint": "tulsi plant"
     },
     {
       "id": "neem",
-      "description": "A young Neem sapling with bright green leaves.",
-      "imageUrl": "https://picsum.photos/seed/neem/400/300",
-      "imageHint": "neem sapling"
+      "description": "Close-up of Neem tree leaves.",
+      "imageUrl": "https://picsum.photos/seed/neem-tree/400/300",
+      "imageHint": "neem tree leaves"
     },
     {
       "id": "aloe",
-      "description": "A small Aloe Vera plant.",
-      "imageUrl": "https://picsum.photos/seed/aloe/400/300",
-      "imageHint": "aloe vera"
+      "description": "An Aloe Vera plant in a pot.",
+      "imageUrl": "https://picsum.photos/seed/aloe-plant/400/300",
+      "imageHint": "aloe vera plant"
     },
     {
       "id": "turmeric",
-      "description": "A turmeric plant with large leaves.",
-      "imageUrl": "https://picsum.photos/seed/turmeric/400/300",
-      "imageHint": "turmeric plant"
+      "description": "A turmeric plant with large green leaves.",
+      "imageUrl": "https://picsum.photos/seed/turmeric-plant/400/300",
+      "imageHint": "turmeric plant leaves"
     },
     {
       "id": "avatar1",

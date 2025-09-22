@@ -20,6 +20,7 @@ import { MapPin, Upload, Loader2, ShieldCheck, ShieldAlert } from 'lucide-react'
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { verifyHarvestPhoto } from '@/ai/flows/verify-harvest-photo-flow';
+import { useLocalization } from '@/context/localization-context';
 
 const harvestFormSchema = z.object({
   herbName: z.string().min(2, { message: 'Herb name must be at least 2 characters.' }),
@@ -41,6 +42,7 @@ const fileToDataUri = (file: File) => new Promise<string>((resolve, reject) => {
 
 export function AddHarvestForm() {
   const router = useRouter();
+  const { t } = useLocalization();
   const { toast } = useToast();
   const [location, setLocation] = useState<string>('');
   const [isLocating, setIsLocating] = useState<boolean>(false);
@@ -68,7 +70,7 @@ export function AddHarvestForm() {
 
         if (verificationResult.isPhotoGenuine) {
             toast({
-                title: 'Photo Verified!',
+                title: t('Photo Verified!'),
                 description: verificationResult.reason,
                 className: 'bg-green-100 dark:bg-green-900 border-green-300 dark:border-green-700'
             });
@@ -76,15 +78,15 @@ export function AddHarvestForm() {
             // Proceed with saving
             console.log(data);
             toast({
-              title: 'Harvest Recorded!',
-              description: `${data.quantity} ${data.unit} of ${data.herbName} has been saved.`,
+              title: t('Harvest Recorded!'),
+              description: t('{{quantity}} {{unit}} of {{herbName}} has been saved.', data),
             });
             router.push('/dashboard');
 
         } else {
             toast({
                 variant: 'destructive',
-                title: 'Photo Verification Failed',
+                title: t('Photo Verification Failed'),
                 description: verificationResult.reason,
             });
         }
@@ -93,8 +95,8 @@ export function AddHarvestForm() {
         console.error('Verification failed', error);
         toast({
             variant: 'destructive',
-            title: 'An error occurred',
-            description: 'Could not verify the photo at this time.',
+            title: t('An error occurred'),
+            description: t('Could not verify the photo at this time.'),
         })
     } finally {
         setIsVerifying(false);
@@ -112,8 +114,8 @@ export function AddHarvestForm() {
         form.setValue('location', locString);
         setIsLocating(false);
         toast({
-            title: "Location Captured",
-            description: `Coordinates: ${locString}`
+            title: t("Location Captured"),
+            description: `${t('Coordinates:')} ${locString}`
         })
     }, 1000);
   }
@@ -121,8 +123,8 @@ export function AddHarvestForm() {
   return (
     <Card className="shadow-lg">
         <CardHeader>
-            <CardTitle>Add New Harvest</CardTitle>
-            <CardDescription>Fill in the details of your recent harvest. The photo will be verified by AI.</CardDescription>
+            <CardTitle>{t('Add New Harvest')}</CardTitle>
+            <CardDescription>{t('Fill in the details of your recent harvest. The photo will be verified by AI.')}</CardDescription>
         </CardHeader>
         <CardContent>
             <Form {...form}>
@@ -132,9 +134,9 @@ export function AddHarvestForm() {
                 name="herbName"
                 render={({ field }) => (
                     <FormItem>
-                    <FormLabel>Herb Name</FormLabel>
+                    <FormLabel>{t('Herb Name')}</FormLabel>
                     <FormControl>
-                        <Input placeholder="e.g., Lavender" {...field} />
+                        <Input placeholder={t('e.g., Lavender')} {...field} />
                     </FormControl>
                     <FormMessage />
                     </FormItem>
@@ -147,7 +149,7 @@ export function AddHarvestForm() {
                     name="quantity"
                     render={({ field }) => (
                         <FormItem>
-                        <FormLabel>Quantity</FormLabel>
+                        <FormLabel>{t('Quantity')}</FormLabel>
                         <FormControl>
                             <Input type="number" step="0.1" placeholder='1.5' {...field} />
                         </FormControl>
@@ -160,7 +162,7 @@ export function AddHarvestForm() {
                     name="unit"
                     render={({ field }) => (
                         <FormItem>
-                        <FormLabel>Unit</FormLabel>
+                        <FormLabel>{t('Unit')}</FormLabel>
                         <FormControl>
                             <Input placeholder="kg" {...field} />
                         </FormControl>
@@ -175,7 +177,7 @@ export function AddHarvestForm() {
                   name="photo"
                   render={({ field: { onChange, onBlur, name, ref } }) => (
                     <FormItem>
-                      <FormLabel>Harvest Photo</FormLabel>
+                      <FormLabel>{t('Harvest Photo')}</FormLabel>
                       <FormControl>
                           <div className="relative">
                             <Input 
@@ -198,17 +200,17 @@ export function AddHarvestForm() {
                 />
                 
                 <FormItem>
-                    <FormLabel>GPS Coordinates</FormLabel>
+                    <FormLabel>{t('GPS Coordinates')}</FormLabel>
                     <div className="flex items-center gap-2">
                         <FormControl>
-                            <Input placeholder="Location will appear here..." value={location} readOnly />
+                            <Input placeholder={t('Location will appear here...')} value={location} readOnly />
                         </FormControl>
                         <Button type="button" variant="outline" onClick={handleGetLocation} disabled={isLocating}>
                             <MapPin className="mr-2 h-4 w-4" />
-                            {isLocating ? 'Getting...' : 'Get Location'}
+                            {isLocating ? t('Getting...') : t('Get Location')}
                         </Button>
                     </div>
-                    <FormDescription>Capture the location of your harvest.</FormDescription>
+                    <FormDescription>{t('Capture the location of your harvest.')}</FormDescription>
                 </FormItem>
 
 
@@ -216,10 +218,10 @@ export function AddHarvestForm() {
                     {isVerifying ? (
                         <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Verifying Photo...
+                            {t('Verifying Photo...')}
                         </>
                     ) : (
-                        'Save Harvest'
+                        t('Save Harvest')
                     )}
                 </Button>
             </form>
