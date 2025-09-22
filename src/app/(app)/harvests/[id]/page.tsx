@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { AppHeader } from '@/components/app-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Calendar, MapPin, Weight, ChevronLeft } from 'lucide-react';
+import { Calendar, MapPin, Weight, ChevronLeft, Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Harvest } from '@/lib/types';
@@ -27,14 +27,8 @@ export default function HarvestDetailPage() {
     if (id) {
       const storedHarvests = JSON.parse(localStorage.getItem('harvests') || '[]');
       const allHarvests = [...storedHarvests, ...mockHarvests];
-
-      // Create a Map to ensure harvests are unique by ID.
-      // The map constructor will automatically handle deduplication, keeping the first
-      // entry it sees for a given key. Since storedHarvests comes first, it takes precedence.
       const uniqueHarvestsMap = new Map(allHarvests.map(h => [h.id, h]));
-      
       const foundHarvest = uniqueHarvestsMap.get(id) || null;
-      
       setHarvest(foundHarvest);
       setIsLoading(false);
     }
@@ -44,13 +38,21 @@ export default function HarvestDetailPage() {
     <>
       <AppHeader title={harvest ? t(harvest.herbName) : t('Harvest Details')} />
       <div className="p-4 sm:p-6 max-w-4xl mx-auto">
-        <div className="mb-4">
+        <div className="flex justify-between items-center mb-4">
             <Button asChild variant="outline" size="sm">
                 <Link href="/harvests">
                     <ChevronLeft className="mr-2 h-4 w-4" />
                     {t('Back to All Harvests')}
                 </Link>
             </Button>
+            {harvest && (
+                <Button asChild size="sm">
+                    <Link href={`/harvests/${harvest.id}/edit`}>
+                        <Pencil className="mr-2 h-4 w-4" />
+                        {t('Edit Harvest')}
+                    </Link>
+                </Button>
+            )}
         </div>
 
         {isLoading ? (
