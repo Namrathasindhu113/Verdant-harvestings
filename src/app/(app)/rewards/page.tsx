@@ -1,3 +1,5 @@
+'use client';
+
 import { AppHeader } from '@/components/app-header';
 import { RewardsRecommendations } from '@/components/rewards-recommendations';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';

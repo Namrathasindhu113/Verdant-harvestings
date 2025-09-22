@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import {mockUser, mockHarvests} from '@/lib/data';
 import {
