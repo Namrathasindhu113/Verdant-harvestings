@@ -1,34 +1,34 @@
 {
   "placeholderImages": [
     {
-      "id": "harvest1",
-      "description": "A close up of fresh basil leaves.",
-      "imageUrl": "https://picsum.photos/seed/harvest1/400/300",
-      "imageHint": "basil leaves"
+      "id": "medicinal1",
+      "description": "An Ashwagandha plant with green leaves and red berries.",
+      "imageUrl": "https://picsum.photos/seed/medicinal1/400/300",
+      "imageHint": "ashwagandha plant"
     },
     {
-      "id": "harvest2",
-      "description": "A mint plant growing in a garden.",
-      "imageUrl": "https://picsum.photos/seed/harvest2/400/300",
-      "imageHint": "mint plant"
+      "id": "medicinal2",
+      "description": "A lush Tulsi (Holy Basil) plant.",
+      "imageUrl": "https://picsum.photos/seed/medicinal2/400/300",
+      "imageHint": "tulsi plant"
     },
     {
-      "id": "harvest3",
-      "description": "Sprigs of fresh rosemary on a wooden table.",
-      "imageUrl": "https://picsum.photos/seed/harvest3/400/300",
-      "imageHint": "rosemary sprigs"
+      "id": "medicinal3",
+      "description": "A branch of a Neem tree with its distinctive leaves.",
+      "imageUrl": "https://picsum.photos/seed/medicinal3/400/300",
+      "imageHint": "neem leaves"
     },
     {
-      "id": "harvest4",
-      "description": "A thyme plant in a pot.",
-      "imageUrl": "https://picsum.photos/seed/harvest4/400/300",
-      "imageHint": "thyme plant"
+      "id": "medicinal4",
+      "description": "An Aloe Vera plant with its thick, spiky leaves.",
+      "imageUrl": "https://picsum.photos/seed/medicinal4/400/300",
+      "imageHint": "aloe vera"
     },
     {
-      "id": "harvest5",
-      "description": "A bunch of fresh cilantro leaves.",
-      "imageUrl": "https://picsum.photos/seed/harvest5/400/300",
-      "imageHint": "cilantro leaves"
+      "id": "medicinal5",
+      "description": "A turmeric plant with its large leaves and a view of the root.",
+      "imageUrl": "https://picsum.photos/seed/medicinal5/400/300",
+      "imageHint": "turmeric plant"
     },
     {
       "id": "avatar1",
