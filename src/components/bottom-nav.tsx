@@ -2,25 +2,29 @@
 
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
-import {Award, Home, Leaf, PlusCircle} from 'lucide-react';
+import {Award, Home, Leaf, PlusCircle, Languages} from 'lucide-react';
 import {cn} from '@/lib/utils';
+import { useLocalization } from '@/context/localization-context';
 
 const navItems = [
   {href: '/dashboard', label: 'Home', icon: Home},
   {href: '/harvests', label: 'Harvests', icon: Leaf},
   {href: '/harvests/add', label: 'Add', icon: PlusCircle, isCentral: true},
   {href: '/rewards', label: 'Rewards', icon: Award},
+  {href: '/localizations', label: 'Localizations', icon: Languages},
 ];
 
 export function BottomNav() {
   const pathname = usePathname();
+  const { t } = useLocalization();
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 border-t bg-background/95 backdrop-blur-sm md:hidden">
-      <div className="grid grid-cols-4 h-16 items-center">
+      <div className="grid grid-cols-5 h-16 items-center">
         {navItems.map(({href, label, icon: Icon, isCentral}) => {
           // Special check for Add Harvest
           if (href === '/harvests/add') return null;
+          if (label === 'Localizations') return null;
           const isActive = pathname.startsWith(href) && (href !== '/dashboard' || pathname === '/dashboard');
           return (
             <Link
@@ -32,7 +36,7 @@ export function BottomNav() {
               )}
             >
               <Icon className="h-6 w-6" />
-              <span className="text-xs">{label}</span>
+              <span className="text-xs">{t(label)}</span>
             </Link>
           );
         })}
@@ -43,7 +47,7 @@ export function BottomNav() {
                 className="relative flex h-16 w-16 flex-col items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform hover:scale-105"
               >
                 <PlusCircle className="h-8 w-8" />
-                <span className="sr-only">Add Harvest</span>
+                <span className="sr-only">{t('Add Harvest')}</span>
             </Link>
        </div>
     </nav>

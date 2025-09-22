@@ -2,25 +2,28 @@
 
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
-import {Award, Home, Leaf, PlusCircle, LogOut} from 'lucide-react';
+import {Award, Home, Leaf, PlusCircle, LogOut, Languages} from 'lucide-react';
 import {cn} from '@/lib/utils';
 import {Button} from '@/components/ui/button';
+import { useLocalization } from '@/context/localization-context';
 
 const navItems = [
   {href: '/dashboard', label: 'Dashboard', icon: Home},
   {href: '/harvests', label: 'My Harvests', icon: Leaf},
   {href: '/rewards', label: 'Rewards', icon: Award},
+  {href: '/localizations', label: 'Localizations', icon: Languages},
 ];
 
 export function SidebarNav() {
   const pathname = usePathname();
+  const {t} = useLocalization();
 
   return (
     <nav className="hidden md:flex md:flex-col md:w-64 md:border-r md:bg-card/80">
       <div className="flex h-16 items-center border-b px-6">
         <Link href="/dashboard" className="flex items-center gap-2 font-bold font-headline text-primary">
           <Leaf />
-          <span>Verdant Harvests</span>
+          <span>{t('Verdant Harvests')}</span>
         </Link>
       </div>
       <div className="flex-1 overflow-auto py-4">
@@ -28,7 +31,7 @@ export function SidebarNav() {
           <Button asChild className="w-full">
             <Link href="/harvests/add">
               <PlusCircle className="mr-2 h-4 w-4" />
-              Add New Harvest
+              {t('Add New Harvest')}
             </Link>
           </Button>
         </div>
@@ -45,7 +48,7 @@ export function SidebarNav() {
                   )}
                 >
                   <Icon className="h-4 w-4" />
-                  {label}
+                  {t(label)}
                 </Link>
               </li>
             );
@@ -56,7 +59,7 @@ export function SidebarNav() {
         <Button asChild variant="ghost" className="w-full justify-start">
             <Link href="/">
                 <LogOut className="mr-2 h-4 w-4" />
-                Logout
+                {t('Logout')}
             </Link>
         </Button>
       </div>
