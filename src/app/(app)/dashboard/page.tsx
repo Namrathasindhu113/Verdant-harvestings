@@ -1,7 +1,8 @@
+
 'use client';
 
 import Link from 'next/link';
-import {mockUser, mockHarvests} from '@/lib/data';
+import {mockUser, mockHarvests as initialHarvests} from '@/lib/data';
 import {
   Card,
   CardContent,
@@ -14,10 +15,27 @@ import {ArrowUpRight, PlusCircle, Gift} from 'lucide-react';
 import {HarvestCard} from '@/components/harvest-card';
 import {AppHeader} from '@/components/app-header';
 import { useLocalization } from '@/context/localization-context';
+import { useEffect, useState } from 'react';
+import { Harvest } from '@/lib/types';
 
 export default function DashboardPage() {
   const { t } = useLocalization();
-  const recentHarvests = mockHarvests.slice(0, 2);
+  const [recentHarvests, setRecentHarvests] = useState<Harvest[]>([]);
+
+  useEffect(() => {
+    // Combine mock data with data from local storage on the client side
+    const storedHarvests = JSON.parse(localStorage.getItem('harvests') || '[]');
+    const combinedHarvests = [...storedHarvests, ...initialHarvests];
+    
+    // Deduplicate harvests based on id
+    const uniqueHarvests = Array.from(new Map(combinedHarvests.map(h => [h.id, h])).values());
+
+    // Sort by date, most recent first, and take the top 2
+    uniqueHarvests.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    setRecentHarvests(uniqueHarvests.slice(0, 2));
+  }, []);
+
+
   return (
     <>
       <AppHeader title="Dashboard" />

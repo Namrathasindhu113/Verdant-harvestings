@@ -1,3 +1,4 @@
+
 export const translations = {
   en: {
     'Verdant Harvests': 'Verdant Harvests',
@@ -81,10 +82,13 @@ export const translations = {
     'Aloe Vera': 'Aloe Vera',
     'Turmeric': 'Turmeric',
     'kg': 'kg',
+    "No Harvests Yet": "No Harvests Yet",
+    "You haven't logged any harvests. Start by adding one!": "You haven't logged any harvests. Start by adding one!",
+    "Add First Harvest": "Add First Harvest",
   },
   hi: {
     'Verdant Harvests': 'हरी-भरी फसलें',
-    'Track your harvests, earn rewards, and grow with us.': 'अपनी फसल पर नज़र रखें, पुरस्कार अर्जित करें, और हमारे साथ आगे बढ़ें।',
+    'Track your harvests, earn rewards, and grow with us.': ' अपनी फसल पर नज़र रखें, पुरस्कार अर्जित करें, और हमारे साथ आगे बढ़ें।',
     'Farmer Login': 'किसान लॉगिन',
     'Enter your credentials to access your dashboard.': 'अपने डैशबोर्ड तक पहुंचने के लिए अपनी क्रेडेंशियल दर्ज करें।',
     'Email': 'ईमेल',
@@ -164,5 +168,8 @@ export const translations = {
     'Aloe Vera': 'एलोवेरा',
     'Turmeric': 'हल्दी',
     'kg': 'किलो',
+    "No Harvests Yet": "अभी तक कोई फसल नहीं हुई है",
+    "You haven't logged any harvests. Start by adding one!": "आपने अभी तक कोई फसल लॉग नहीं की है। एक जोड़कर शुरू करें!",
+    "Add First Harvest": "पहली फसल जोड़ें",
   },
 };

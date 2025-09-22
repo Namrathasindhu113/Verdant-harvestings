@@ -1,3 +1,4 @@
+
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,6 +22,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { verifyHarvestPhoto } from '@/ai/flows/verify-harvest-photo-flow';
 import { useLocalization } from '@/context/localization-context';
+import { mockHarvests } from '@/lib/data';
+import { Harvest } from '@/lib/types';
 
 const harvestFormSchema = z.object({
   herbName: z.string().min(2, { message: 'Herb name must be at least 2 characters.' }),
@@ -75,13 +78,30 @@ export function AddHarvestForm() {
                 className: 'bg-green-100 dark:bg-green-900 border-green-300 dark:border-green-700'
             });
 
-            // Proceed with saving
-            console.log(data);
+            // Save the harvest to local storage
+            const newHarvest: Harvest = {
+              id: new Date().toISOString(),
+              herbName: data.herbName,
+              quantity: data.quantity,
+              unit: data.unit,
+              date: new Date(),
+              photoUrl: photoDataUri,
+              photoHint: `${data.herbName.toLowerCase()} plant`,
+              gps: {
+                lat: parseFloat(location.split(',')[0] || '0'),
+                lon: parseFloat(location.split(',')[1] || '0'),
+              },
+            };
+            
+            const storedHarvests = JSON.parse(localStorage.getItem('harvests') || '[]');
+            localStorage.setItem('harvests', JSON.stringify([newHarvest, ...storedHarvests]));
+
             toast({
               title: t('Harvest Recorded!'),
               description: t('{{quantity}} {{unit}} of {{herbName}} has been saved.', data),
             });
-            router.push('/dashboard');
+            router.push('/harvests');
+            router.refresh();
 
         } else {
             toast({
